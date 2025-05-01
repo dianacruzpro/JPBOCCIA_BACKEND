@@ -1,8 +1,16 @@
 package com.uped.JP_BOCCIA_BACK.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "pais")
 public class Pais {
@@ -16,27 +24,5 @@ public class Pais {
 
 
     /*   Getters and Setters    */
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getSiglas() {
-        return siglas;
-    }
-
-    public void setSiglas(String siglas) {
-        this.siglas = siglas;
-    }
+    //Genrado con lmbok
 }

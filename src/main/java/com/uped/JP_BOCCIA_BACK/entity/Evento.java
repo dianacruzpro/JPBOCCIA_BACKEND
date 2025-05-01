@@ -1,9 +1,17 @@
 package com.uped.JP_BOCCIA_BACK.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "evento")
 public class Evento {
@@ -30,51 +38,5 @@ public class Evento {
 
 
     /*   Getters and Setters    */
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public TipoEvento getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoEvento tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getCancha() {
-        return cancha;
-    }
-
-    public void setCancha(String cancha) {
-        this.cancha = cancha;
-    }
-
-    public Torneo getTorneo() {
-        return torneo;
-    }
-
-    public void setTorneo(Torneo torneo) {
-        this.torneo = torneo;
-    }
+    //Generado con lombok
 }

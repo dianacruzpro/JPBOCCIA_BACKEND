@@ -1,17 +1,14 @@
 package com.uped.JP_BOCCIA_BACK.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Entity
-@Table(name = "jugador")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "jugador")
 public class Jugador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
