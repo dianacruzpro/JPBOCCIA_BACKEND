@@ -36,7 +36,7 @@ public class Usuario {
     private Boolean estado = true;
 
     public enum RolUsuario {
-        admin, operador, arbitro, juez, jugador
+        admin, operador, arbitro, juez
     }
 
     /*   Getters and Setters    */
