@@ -40,5 +40,5 @@ public class Usuario {
     }
 
     /*   Getters and Setters    */
-    //Generado con lombok
+    //Generados con lombok
 }
