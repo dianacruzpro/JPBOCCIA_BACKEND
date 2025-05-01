@@ -30,4 +30,5 @@ public class GlobalExceptionHandler {
         respuesta.put("error", ex.getMessage());
         return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
     }
+
 }

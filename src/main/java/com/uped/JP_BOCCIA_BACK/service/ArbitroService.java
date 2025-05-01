@@ -1,6 +1,7 @@
 package com.uped.JP_BOCCIA_BACK.service;
 
 import com.uped.JP_BOCCIA_BACK.dto.ArbitroDTO;
+import com.uped.JP_BOCCIA_BACK.entity.Arbitro;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface ArbitroService {
     ArbitroDTO buscarPorId(Long id);
     ArbitroDTO actualizar(Long id, ArbitroDTO arbitroDTO);
     void eliminar(Long id);
+    List<Arbitro> guardarVarios(List<Arbitro> arbitros);
 }
