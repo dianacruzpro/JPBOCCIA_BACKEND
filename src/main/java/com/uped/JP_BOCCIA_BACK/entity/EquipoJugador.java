@@ -18,11 +18,11 @@ public class EquipoJugador {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "equipo_id")
+    @JoinColumn(name = "equipo_id", nullable = false)
     private Equipo equipo;
 
     @ManyToOne
-    @JoinColumn(name = "jugador_id")
+    @JoinColumn(name = "jugador_id", nullable = false)
     private Jugador jugador;
 
     /*   Getters and Setters    */

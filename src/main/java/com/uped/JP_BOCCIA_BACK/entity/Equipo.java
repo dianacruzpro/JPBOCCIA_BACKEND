@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,6 +33,9 @@ public class Equipo {
     public enum TipoEquipo {
         pareja, equipo
     }
+
+    @OneToMany(mappedBy = "equipo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EquipoJugador> equipoJugadores;
 
     /*   Getters and Setters    */
     //Generado con lombok
