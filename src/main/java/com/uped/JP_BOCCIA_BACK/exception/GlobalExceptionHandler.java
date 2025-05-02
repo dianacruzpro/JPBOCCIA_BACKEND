@@ -31,4 +31,24 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(JugadorNoEncontradoException.class)
+    public ResponseEntity<Map<String, String>> manejarJugadorNoEncontrado(JugadorNoEncontradoException ex) {
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("error", ex.getMessage());
+        return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EquipoNoEncontradoException.class)
+    public ResponseEntity<Map<String, String>> manejarEquipoNoEncontrado(EquipoNoEncontradoException ex) {
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("error", ex.getMessage());
+        return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EquipoJugadorNoEncontradoException.class)
+    public ResponseEntity<Map<String, String>> manejarEquipoJugadorNoEncontrado(EquipoJugadorNoEncontradoException ex) {
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("error", ex.getMessage());
+        return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
+    }
 }
