@@ -51,4 +51,10 @@ public class GlobalExceptionHandler {
         respuesta.put("error", ex.getMessage());
         return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
     }
+ @ExceptionHandler(AuditoriaNoEncontradaException.class)
+    public ResponseEntity<Map<String, String>> manejarAuditoriaNoEncontrada(AuditoriaNoEncontradaException ex) {
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("error", ex.getMessage());
+        return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
+    }
 }
