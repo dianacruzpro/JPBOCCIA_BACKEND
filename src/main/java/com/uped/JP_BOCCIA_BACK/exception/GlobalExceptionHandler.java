@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,4 +74,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(RecursoNoEncontradoException.class)
+    public ResponseEntity<?> manejarRecursoNoEncontrado(RecursoNoEncontradoException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("error", "Recurso no encontrado");
+        error.put("mensaje", ex.getMessage());
+        error.put("timestamp", LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
 }
