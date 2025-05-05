@@ -49,4 +49,5 @@ public class UsuarioController {
         respuesta.put("mensaje", "Usuario eliminado con éxito");
         return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
+    //Falta implementar ingreso por varios usuarios y manejar mejor los errores de todas las entity
 }

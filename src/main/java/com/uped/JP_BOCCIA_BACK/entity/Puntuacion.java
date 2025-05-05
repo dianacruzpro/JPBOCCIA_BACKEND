@@ -22,7 +22,9 @@ public class Puntuacion {
     private Partido partido;
 
     private Integer numeroSet;
+    @Builder.Default
     private Integer puntosEquipo1 = 0;
+    @Builder.Default
     private Integer puntosEquipo2 = 0;
 
     /*   Getters and Setters    */

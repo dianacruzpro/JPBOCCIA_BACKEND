@@ -12,6 +12,7 @@ import java.util.List;
 @RequestMapping("/api/torneos")
 public class TorneoController {
 
+
     @Autowired
     private TorneoService torneoService;
 

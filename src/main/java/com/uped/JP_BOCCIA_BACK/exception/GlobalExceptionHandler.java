@@ -51,10 +51,26 @@ public class GlobalExceptionHandler {
         respuesta.put("error", ex.getMessage());
         return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
     }
- @ExceptionHandler(AuditoriaNoEncontradaException.class)
+
+    @ExceptionHandler(AuditoriaNoEncontradaException.class)
     public ResponseEntity<Map<String, String>> manejarAuditoriaNoEncontrada(AuditoriaNoEncontradaException ex) {
         Map<String, String> respuesta = new HashMap<>();
         respuesta.put("error", ex.getMessage());
         return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(PartidoNoEncontradoException.class)
+    public ResponseEntity<Map<String, String>> manejarPartidoNoEncontrado(PartidoNoEncontradoException ex) {
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("error", ex.getMessage());
+        return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EventoNoEncontradoException.class)
+    public ResponseEntity<Map<String, String>> manejarEventoNoEncontrado(EventoNoEncontradoException ex) {
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("error", ex.getMessage());
+        return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
+    }
+
 }
