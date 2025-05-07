@@ -45,6 +45,11 @@ public class PartidoServiceImpl implements PartidoService {
         Arbitro arbitro = arbitroRepository.findById(dto.getArbitro_id())
                 .orElseThrow(() -> new ArbitroNoEncontradoException(dto.getArbitro_id()));
 
+        // Validación para evitar mezcla de jugadores y equipos
+        if ((dto.getJugador1_id() != null || dto.getJugador2_id() != null) && (dto.getEquipo1_id() != null || dto.getEquipo2_id() != null)) {
+            throw new IllegalArgumentException("No se puede registrar un partido con mezcla de jugadores y equipos.");
+        }
+
         Partido partido = PartidoMapper.toEntity(dto, evento, arbitro);
         Partido partidoGuardado = partidoRepository.save(partido);
         return PartidoMapper.toDTO(partidoGuardado);
@@ -68,8 +73,19 @@ public class PartidoServiceImpl implements PartidoService {
         Arbitro arbitro = arbitroRepository.findById(dto.getArbitro_id())
                 .orElseThrow(() -> new ArbitroNoEncontradoException(dto.getArbitro_id()));
 
+        // Validación para evitar mezcla de jugadores y equipos
+        if ((dto.getJugador1_id() != null || dto.getJugador2_id() != null) && (dto.getEquipo1_id() != null || dto.getEquipo2_id() != null)) {
+            throw new IllegalArgumentException("No se puede actualizar un partido con mezcla de jugadores y equipos.");
+        }
+
         partidoExistente.setEvento(evento);
         partidoExistente.setArbitroPrincipal(arbitro);
+        partidoExistente.setJugador1_id(dto.getJugador1_id());
+        partidoExistente.setJugador2_id(dto.getJugador2_id());
+        partidoExistente.setEquipo1_id(dto.getEquipo1_id());
+        partidoExistente.setEquipo2_id(dto.getEquipo2_id());
+        partidoExistente.setEstado(Partido.EstadoPartido.valueOf(dto.getEstado()));
+        partidoExistente.setResultadoFinal(dto.getResultadoFinal());
 
         Partido partidoActualizado = partidoRepository.save(partidoExistente);
         return PartidoMapper.toDTO(partidoActualizado);
