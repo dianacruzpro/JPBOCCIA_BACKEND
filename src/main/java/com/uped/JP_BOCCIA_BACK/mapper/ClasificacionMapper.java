@@ -19,20 +19,28 @@ public class ClasificacionMapper {
         dto.setTipo(String.valueOf(clasificacion.getTipo()));
         dto.setJugadorID(clasificacion.getJugador().getId());
         dto.setEquipoID(clasificacion.getEquipo().getId());
-        dto.setPosicion(String.valueOf(clasificacion.getPosicion()));
+        dto.setPosicion(clasificacion.getPosicion());
         dto.setFechaRegistro(LocalDate.from(clasificacion.getFechaRegistro()));
         return dto;
     }
 
     public static Clasificacion toEntity(ClasificacionDTO dto, Torneo torneo, Jugador jugador, Equipo equipo) {
+        Clasificacion.TipoClasificacion tipo;
+        try {
+            tipo = Clasificacion.TipoClasificacion.valueOf(dto.getTipo());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Tipo de clasificación inválido: " + dto.getTipo());
+        }
+
         return Clasificacion.builder()
-                .id(dto.getId()) // Use getId() instead of id
+                .id(dto.getId())
                 .torneo(torneo)
-                .tipo(Clasificacion.TipoClasificacion.valueOf(dto.getTipo()))
+                .tipo(tipo)
                 .jugador(jugador)
                 .equipo(equipo)
                 .posicion(Integer.valueOf(dto.getPosicion()))
                 .fechaRegistro(dto.getFechaRegistro().atStartOfDay())
                 .build();
     }
+
 }

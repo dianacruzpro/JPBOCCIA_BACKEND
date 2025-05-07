@@ -3,9 +3,12 @@ package com.uped.JP_BOCCIA_BACK.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -81,5 +84,17 @@ public class GlobalExceptionHandler {
         error.put("mensaje", ex.getMessage());
         error.put("timestamp", LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ClasificacionNoEncontradoException.class)
+    public ResponseEntity<Object> handleClasificacionNoEncontrada(ClasificacionNoEncontradoException ex, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", ZonedDateTime.now());
+        body.put("status", HttpStatus.NOT_FOUND.value());
+        body.put("error", "No se encontró la clasificación");
+        body.put("message", ex.getMessage());
+        body.put("path", request.getDescription(false).replace("uri=", ""));
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 }

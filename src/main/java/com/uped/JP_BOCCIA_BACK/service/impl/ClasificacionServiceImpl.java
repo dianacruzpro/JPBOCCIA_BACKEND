@@ -1,5 +1,6 @@
 package com.uped.JP_BOCCIA_BACK.service.impl;
 
+import ch.qos.logback.classic.Logger;
 import com.uped.JP_BOCCIA_BACK.dto.ClasificacionDTO;
 import com.uped.JP_BOCCIA_BACK.entity.Clasificacion;
 import com.uped.JP_BOCCIA_BACK.entity.Equipo;
@@ -18,6 +19,7 @@ import com.uped.JP_BOCCIA_BACK.service.EquipoService;
 import com.uped.JP_BOCCIA_BACK.service.JugadorService;
 import com.uped.JP_BOCCIA_BACK.service.TorneoService;
 import org.springframework.stereotype.Service;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +34,8 @@ public class ClasificacionServiceImpl implements ClasificacionService {
     private final TorneoRepository torneoRepository;
     private final JugadorRepository jugadorRepository;
     private final EquipoRepository equipoRepository;
+    private static final Logger log = (Logger) LoggerFactory.getLogger(ClasificacionServiceImpl.class);
+
 
     public ClasificacionServiceImpl(
             ClasificacionRepository clasificacionRepository,
@@ -57,10 +61,22 @@ public class ClasificacionServiceImpl implements ClasificacionService {
 
     @Override
     public ClasificacionDTO buscarPorId(Long id) {
-        Clasificacion clasificacion = clasificacionRepository.findById(id)
-                .orElseThrow(() -> new ClasificacionNoEncontradoException(id));
-        return ClasificacionMapper.toDTO(clasificacion);
+        try {
+            Clasificacion clasificacion = clasificacionRepository.findById(id)
+                    .orElseThrow(() -> new ClasificacionNoEncontradoException(id));
+
+            log.info("Clasificación encontrada: {}", clasificacion);
+            return ClasificacionMapper.toDTO(clasificacion);
+
+        } catch (ClasificacionNoEncontradoException e) {
+            log.error("Clasificación con ID {} no encontrada", id, e);
+            throw e;
+        } catch (Exception e) {
+            log.error("Error inesperado al buscar clasificación con ID {}", id, e);
+            throw new RuntimeException("Error al procesar la solicitud", e);
+        }
     }
+
 
     @Override
     public ClasificacionDTO guardar(ClasificacionDTO dto) {
@@ -89,7 +105,7 @@ public class ClasificacionServiceImpl implements ClasificacionService {
         existente.setTipo(Clasificacion.TipoClasificacion.valueOf(dto.getTipo()));
         existente.setJugador(jugador);
         existente.setEquipo(equipo);
-        existente.setPosicion(Integer.parseInt(dto.getPosicion()));
+        existente.setPosicion(dto.getPosicion());
         existente.setFechaRegistro(dto.getFechaRegistro().atStartOfDay());
 
         Clasificacion actualizado = clasificacionRepository.save(existente);

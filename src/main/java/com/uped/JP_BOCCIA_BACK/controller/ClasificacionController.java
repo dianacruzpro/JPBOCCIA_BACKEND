@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/clasificaciones")
-@CrossOrigin(origins = "*")
 public class ClasificacionController {
 
     private final ClasificacionService clasificacionService;
@@ -25,20 +24,18 @@ public class ClasificacionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ClasificacionDTO> buscarPorId(@PathVariable Long id) {
-        ClasificacionDTO clasificacion = clasificacionService.buscarPorId(id);
-        return ResponseEntity.ok(clasificacion);
+        return ResponseEntity.ok(clasificacionService.buscarPorId(id));
     }
 
     @PostMapping
     public ResponseEntity<ClasificacionDTO> guardar(@RequestBody ClasificacionDTO dto) {
-        ClasificacionDTO guardado = clasificacionService.guardar(dto);
-        return ResponseEntity.ok(guardado);
+        return ResponseEntity.ok(clasificacionService.guardar(dto));
     }
 
-    @PutMapping
-    public ResponseEntity<ClasificacionDTO> actualizar(@RequestBody ClasificacionDTO dto) {
-        ClasificacionDTO actualizado = clasificacionService.actualizar(dto);
-        return ResponseEntity.ok(actualizado);
+    @PutMapping("/{id}")
+    public ResponseEntity<ClasificacionDTO> actualizar(@PathVariable Long id, @RequestBody ClasificacionDTO dto) {
+        dto.setId(id); // Asegura que el ID del path se use en la actualización
+        return ResponseEntity.ok(clasificacionService.actualizar(dto));
     }
 
     @DeleteMapping("/{id}")

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClasificacionRepository extends JpaRepository<Clasificacion, Long> {
-    Long id(Long id);
+
 }

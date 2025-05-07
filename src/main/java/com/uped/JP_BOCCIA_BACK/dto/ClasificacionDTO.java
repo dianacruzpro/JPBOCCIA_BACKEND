@@ -16,7 +16,7 @@ public class ClasificacionDTO {
     private String tipo;
     private Long jugadorID;
     private Long equipoID;
-    private String posicion;
+    private Integer posicion;
     private LocalDate fechaRegistro;
 
     }
