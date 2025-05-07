@@ -11,13 +11,13 @@ public class PartidoDTO {
 
     private Long eventoId;
 
-    private Long jugador1Id;
-    private Long jugador2Id;
+    private Long jugador1_id;
+    private Long jugador2_id;
 
-    private Long equipo1Id;
-    private Long equipo2Id;
+    private Long equipo1_id;
+    private Long equipo2_id;
 
-    private Long arbitroId;
+    private Long arbitro_id;
 
     private String estado; // Como texto (programado, en_juego, finalizado)
 

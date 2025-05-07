@@ -20,11 +20,11 @@ public class Partido {
     @JoinColumn(name = "evento_id")
     private Evento evento;
 
-    private Long jugador1Id;
-    private Long jugador2Id;
+    private Long jugador1_id;
+    private Long jugador2_id;
 
-    private Long equipo1Id;
-    private Long equipo2Id;
+    private Long equipo1_id;
+    private Long equipo2_id;
 
     @ManyToOne
     @JoinColumn(name = "arbitro_principal_id")

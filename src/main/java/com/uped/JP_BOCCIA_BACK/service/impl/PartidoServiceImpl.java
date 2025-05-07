@@ -42,8 +42,8 @@ public class PartidoServiceImpl implements PartidoService {
         Evento evento = eventoRepository.findById(dto.getEventoId())
                 .orElseThrow(() -> new EventoNoEncontradoException(dto.getEventoId()));
 
-        Arbitro arbitro = arbitroRepository.findById(dto.getArbitroId())
-                .orElseThrow(() -> new ArbitroNoEncontradoException(dto.getArbitroId()));
+        Arbitro arbitro = arbitroRepository.findById(dto.getArbitro_id())
+                .orElseThrow(() -> new ArbitroNoEncontradoException(dto.getArbitro_id()));
 
         Partido partido = PartidoMapper.toEntity(dto, evento, arbitro);
         Partido partidoGuardado = partidoRepository.save(partido);
@@ -65,8 +65,8 @@ public class PartidoServiceImpl implements PartidoService {
         Evento evento = eventoRepository.findById(dto.getEventoId())
                 .orElseThrow(() -> new EventoNoEncontradoException(dto.getEventoId()));
 
-        Arbitro arbitro = arbitroRepository.findById(dto.getArbitroId())
-                .orElseThrow(() -> new ArbitroNoEncontradoException(dto.getArbitroId()));
+        Arbitro arbitro = arbitroRepository.findById(dto.getArbitro_id())
+                .orElseThrow(() -> new ArbitroNoEncontradoException(dto.getArbitro_id()));
 
         partidoExistente.setEvento(evento);
         partidoExistente.setArbitroPrincipal(arbitro);
