@@ -39,6 +39,8 @@ public class Clasificacion {
         jugador, equipo
     }
 
+
+
     /*   Getters and Setters    */
     //Generados con lombok
 }

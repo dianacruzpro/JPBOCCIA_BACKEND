@@ -87,14 +87,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ClasificacionNoEncontradoException.class)
-    public ResponseEntity<Object> handleClasificacionNoEncontrada(ClasificacionNoEncontradoException ex, WebRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", ZonedDateTime.now());
-        body.put("status", HttpStatus.NOT_FOUND.value());
-        body.put("error", "No se encontró la clasificación");
-        body.put("message", ex.getMessage());
-        body.put("path", request.getDescription(false).replace("uri=", ""));
-
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, String>> handleNotFound(ClasificacionNoEncontradoException ex) {
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("error", ex.getMessage());
+        return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
     }
 }

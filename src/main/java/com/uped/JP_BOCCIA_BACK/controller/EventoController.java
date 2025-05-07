@@ -30,7 +30,7 @@ public class EventoController {
     // POST /api/eventos
     @PostMapping
     public EventoDTO crearEvento(@RequestBody EventoDTO eventoDTO) {
-        return (EventoDTO) eventoService.guardar(eventoDTO);
+        return eventoService.guardar(eventoDTO);
     }
 
     // DELETE /api/eventos/{id}

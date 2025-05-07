@@ -2,6 +2,7 @@ package com.uped.JP_BOCCIA_BACK.controller;
 
 import com.uped.JP_BOCCIA_BACK.dto.ClasificacionDTO;
 import com.uped.JP_BOCCIA_BACK.service.ClasificacionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ public class ClasificacionController {
 
     private final ClasificacionService clasificacionService;
 
+    @Autowired
     public ClasificacionController(ClasificacionService clasificacionService) {
         this.clasificacionService = clasificacionService;
     }
@@ -28,8 +30,14 @@ public class ClasificacionController {
     }
 
     @PostMapping
-    public ResponseEntity<ClasificacionDTO> guardar(@RequestBody ClasificacionDTO dto) {
-        return ResponseEntity.ok(clasificacionService.guardar(dto));
+    public ResponseEntity<?> guardar(@RequestBody ClasificacionDTO dto) {
+        if (dto.getTorneoID() == null) {
+            ClasificacionDTO errorDTO = new ClasificacionDTO();
+            errorDTO.setErrorMessage("El ID del torneo no puede ser null");
+            return ResponseEntity.badRequest().body(errorDTO);
+        }
+        ClasificacionDTO clasificacion = clasificacionService.guardar(dto);
+        return ResponseEntity.ok(clasificacion);
     }
 
     @PutMapping("/{id}")

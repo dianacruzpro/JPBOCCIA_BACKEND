@@ -16,13 +16,21 @@ public class ClasificacionMapper {
         ClasificacionDTO dto = new ClasificacionDTO();
         dto.setId(clasificacion.getId());
         dto.setTorneoID(clasificacion.getTorneo().getId());
-        dto.setTipo(String.valueOf(clasificacion.getTipo()));
-        dto.setJugadorID(clasificacion.getJugador().getId());
-        dto.setEquipoID(clasificacion.getEquipo().getId());
+        dto.setTipo(clasificacion.getTipo().name());
+
+        if (clasificacion.getJugador() != null) {
+            dto.setJugadorID(clasificacion.getJugador().getId());
+        }
+
+        if (clasificacion.getEquipo() != null) {
+            dto.setEquipoID(clasificacion.getEquipo().getId());
+        }
+
         dto.setPosicion(clasificacion.getPosicion());
         dto.setFechaRegistro(LocalDate.from(clasificacion.getFechaRegistro()));
         return dto;
     }
+
 
     public static Clasificacion toEntity(ClasificacionDTO dto, Torneo torneo, Jugador jugador, Equipo equipo) {
         Clasificacion.TipoClasificacion tipo;

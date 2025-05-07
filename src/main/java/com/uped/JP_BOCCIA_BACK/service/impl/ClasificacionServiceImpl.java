@@ -9,6 +9,7 @@ import com.uped.JP_BOCCIA_BACK.entity.Torneo;
 import com.uped.JP_BOCCIA_BACK.exception.ClasificacionNoEncontradoException;
 import com.uped.JP_BOCCIA_BACK.exception.EquipoNoEncontradoException;
 import com.uped.JP_BOCCIA_BACK.exception.JugadorNoEncontradoException;
+import com.uped.JP_BOCCIA_BACK.exception.TorneoNoEncontradoException;
 import com.uped.JP_BOCCIA_BACK.mapper.ClasificacionMapper;
 import com.uped.JP_BOCCIA_BACK.repository.ClasificacionRepository;
 import com.uped.JP_BOCCIA_BACK.repository.EquipoRepository;
@@ -80,15 +81,55 @@ public class ClasificacionServiceImpl implements ClasificacionService {
 
     @Override
     public ClasificacionDTO guardar(ClasificacionDTO dto) {
+        if (dto.getTorneoID() == null) {
+            throw new IllegalArgumentException("El ID del torneo no puede ser null");
+        }
 
-        Torneo torneo = torneoRepository.findById(dto.getTorneoID()).orElse(null);
-        Jugador jugador = jugadorRepository.findById(dto.getJugadorID()).orElseThrow(() ->  new JugadorNoEncontradoException(dto.getJugadorID()));
-        Equipo equipo = equipoRepository.findById(dto.getEquipoID()).orElseThrow(() ->  new EquipoNoEncontradoException(dto.getEquipoID()));
+        // Validación por tipo de clasificación
+        if (dto.getTipo() == null) {
+            throw new IllegalArgumentException("El tipo de clasificación no puede ser null");
+        }
 
+        if (dto.getTipo().equals("jugador")) {
+            if (dto.getEquipoID() != null) {
+                throw new IllegalArgumentException("El ID del equipo debe ser null cuando el tipo es 'jugador'");
+            }
+            if (dto.getJugadorID() == null) {
+                throw new IllegalArgumentException("El ID del jugador no puede ser null cuando el tipo es 'jugador'");
+            }
+        } else if (dto.getTipo().equals("equipo")) {
+            if (dto.getJugadorID() != null) {
+                throw new IllegalArgumentException("El ID del jugador debe ser null cuando el tipo es 'equipo'");
+            }
+            if (dto.getEquipoID() == null) {
+                throw new IllegalArgumentException("El ID del equipo no puede ser null cuando el tipo es 'equipo'");
+            }
+        } else {
+            throw new IllegalArgumentException("Tipo de clasificación no válido");
+        }
+
+        Torneo torneo = torneoRepository.findById(dto.getTorneoID())
+                .orElseThrow(() -> new TorneoNoEncontradoException(dto.getTorneoID()));
+
+        Jugador jugador = null;
+        if (dto.getJugadorID() != null) {
+            jugador = jugadorRepository.findById(dto.getJugadorID())
+                    .orElseThrow(() -> new JugadorNoEncontradoException(dto.getJugadorID()));
+        }
+
+        Equipo equipo = null;
+        if (dto.getEquipoID() != null) {
+            equipo = equipoRepository.findById(dto.getEquipoID())
+                    .orElseThrow(() -> new EquipoNoEncontradoException(dto.getEquipoID()));
+        }
+
+        // Crea la entidad de clasificación
         Clasificacion clasificacion = ClasificacionMapper.toEntity(dto, torneo, jugador, equipo);
         Clasificacion guardado = clasificacionRepository.save(clasificacion);
         return ClasificacionMapper.toDTO(guardado);
     }
+
+
 
     @Override
     public ClasificacionDTO actualizar(ClasificacionDTO dto) {
